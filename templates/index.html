@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Complexity Visualizer</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body>
+
+<h1>Algorithm Complexity Visualizer</h1>
+
+<label>Enter n:</label>
+
+<input
+type="range"
+id="n"
+min="1"
+max="100"
+value="10">
+
+<p>N = <span id="value">10</span></p>
+
+<div id="output">
+
+<p>O(1)=<span id="o1"></span></p>
+
+<p>O(log n)=<span id="olog"></span></p>
+
+<p>O(n)=<span id="on"></span></p>
+
+<p>O(n log n)=<span id="onlog"></span></p>
+
+<p>O(n²)=<span id="on2"></span></p>
+
+</div>
+
+<script src="{{ url_for('static',filename='script.js') }}"></script>
+
+</body>
+
+</html>
