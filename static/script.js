@@ -1,24 +1,38 @@
-let slider=document.getElementById("n");
+function loadData() {
+    let n = document.getElementById("nInput").value;
 
-slider.oninput=function(){
+    fetch(`/compute?n=${n}`)
+        .then(res => res.json())
+        .then(data => {
 
-let n=this.value;
+            let html = "<table>";
 
-document.getElementById("value").innerHTML=n;
+            html += `
+                <tr>
+                    <th>n</th>
+                    <th>O(1)</th>
+                    <th>O(log n)</th>
+                    <th>O(n)</th>
+                    <th>O(n log n)</th>
+                    <th>O(n²)</th>
+                </tr>
+            `;
 
-document.getElementById("o1").innerHTML=1;
+            for (let i = 0; i < data.x.length; i++) {
+                html += `
+                    <tr>
+                        <td>${data.x[i]}</td>
+                        <td>${data["O(1)"][i]}</td>
+                        <td>${data["O(log n)"][i]}</td>
+                        <td>${data["O(n)"][i]}</td>
+                        <td>${data["O(n log n)"][i]}</td>
+                        <td>${data["O(n^2)"][i]}</td>
+                    </tr>
+                `;
+            }
 
-document.getElementById("olog").innerHTML=
-Math.log2(n).toFixed(2);
+            html += "</table>";
 
-document.getElementById("on").innerHTML=n;
-
-document.getElementById("onlog").innerHTML=
-(n*Math.log2(n)).toFixed(2);
-
-document.getElementById("on2").innerHTML=
-n*n;
-
+            document.getElementById("output").innerHTML = html;
+        });
 }
-
-slider.oninput();

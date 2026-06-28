@@ -1,15 +1,33 @@
-import streamlit as st
+from flask import Flask, render_template, request, jsonify
+import math
 
-st.title("Complexity Visualizer")
+app = Flask(__name__)
 
-algorithms = {
-    "Bubble Sort": "O(n²)",
-    "Merge Sort": "O(n log n)",
-    "Binary Search": "O(log n)"
-}
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-algo = st.selectbox("Select Algorithm", list(algorithms.keys()))
 
-if st.button("Visualize"):
-    st.success(f"{algo}")
-    st.write("Time Complexity:", algorithms[algo])
+@app.route('/compute')
+def compute():
+    n = request.args.get('n', default=10, type=int)
+
+    if n > 200:
+        n = 200
+
+    x = list(range(1, n + 1))
+
+    data = {
+        "x": x,
+        "O(1)": [1 for _ in x],
+        "O(log n)": [round(math.log2(i), 2) for i in x],
+        "O(n)": x,
+        "O(n log n)": [round(i * math.log2(i), 2) for i in x],
+        "O(n^2)": [i * i for i in x]
+    }
+
+    return jsonify(data)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
