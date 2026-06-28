@@ -2,10 +2,12 @@ import streamlit as st
 import math
 import pandas as pd
 
-st.title("Complexity Visualizer")
+st.title("📊 Complexity Visualizer")
 
-n = st.slider("Enter N", 1, 200, 10)
+# INPUT (this automatically triggers rerun)
+n = st.slider("Select value of N", 1, 200, 10)
 
+# DATA GENERATION (runs every time n changes)
 x = list(range(1, n + 1))
 
 data = {
@@ -19,4 +21,7 @@ data = {
 
 df = pd.DataFrame(data)
 
+st.subheader("Output Table")
+
+# THIS updates automatically
 st.dataframe(df)
