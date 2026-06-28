@@ -1,14 +1,15 @@
 import streamlit as st
 
-st.set_page_config(page_title="Complexity Visualizer")
-
 st.title("Complexity Visualizer")
-st.write("Welcome to Complexity Visualizer")
 
-algo = st.selectbox(
-    "Select Algorithm",
-    ["Bubble Sort", "Merge Sort", "Binary Search"]
-)
+algorithms = {
+    "Bubble Sort": "O(n²)",
+    "Merge Sort": "O(n log n)",
+    "Binary Search": "O(log n)"
+}
+
+algo = st.selectbox("Select Algorithm", list(algorithms.keys()))
 
 if st.button("Visualize"):
-    st.success(f"{algo} visualization loaded")
+    st.success(f"{algo}")
+    st.write("Time Complexity:", algorithms[algo])
