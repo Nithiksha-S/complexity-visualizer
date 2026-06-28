@@ -1,7 +1,14 @@
-from flask import Flask, render_template
+import streamlit as st
 
-app = Flask(__name__)
+st.set_page_config(page_title="Complexity Visualizer")
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+st.title("Complexity Visualizer")
+st.write("Welcome to Complexity Visualizer")
+
+algo = st.selectbox(
+    "Select Algorithm",
+    ["Bubble Sort", "Merge Sort", "Binary Search"]
+)
+
+if st.button("Visualize"):
+    st.success(f"{algo} visualization loaded")
