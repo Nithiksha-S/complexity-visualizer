@@ -1,33 +1,22 @@
-from flask import Flask, render_template, request, jsonify
+import streamlit as st
 import math
+import pandas as pd
 
-app = Flask(__name__)
+st.title("Complexity Visualizer")
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+n = st.slider("Enter N", 1, 200, 10)
 
+x = list(range(1, n + 1))
 
-@app.route('/compute')
-def compute():
-    n = request.args.get('n', default=10, type=int)
+data = {
+    "n": x,
+    "O(1)": [1 for _ in x],
+    "O(log n)": [round(math.log2(i), 2) for i in x],
+    "O(n)": x,
+    "O(n log n)": [round(i * math.log2(i), 2) for i in x],
+    "O(n²)": [i * i for i in x]
+}
 
-    if n > 200:
-        n = 200
+df = pd.DataFrame(data)
 
-    x = list(range(1, n + 1))
-
-    data = {
-        "x": x,
-        "O(1)": [1 for _ in x],
-        "O(log n)": [round(math.log2(i), 2) for i in x],
-        "O(n)": x,
-        "O(n log n)": [round(i * math.log2(i), 2) for i in x],
-        "O(n^2)": [i * i for i in x]
-    }
-
-    return jsonify(data)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+st.dataframe(df)
